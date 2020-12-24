@@ -1,0 +1,21 @@
+class Main {
+	function void main() {
+		var PongGame game;
+		var int play, x;
+		var Ball ball;
+		let game = PongGame.new();
+		let play = 1;
+		while (play = 1) {
+			do game.run();
+			if (Keyboard.keyPressed() = 140) { 
+				let play = 0;
+			}
+			let ball = game.getBall();
+			let x = ball.getX();
+			if ( (x = 0) | (x = 256) ) {
+				do game.dispose();
+			}
+		}
+		return;
+	}
+}

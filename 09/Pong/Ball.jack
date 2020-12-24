@@ -1,0 +1,105 @@
+///256 x 256
+
+class Ball {
+
+   field int x, y; // screen location of the square's top-left corner
+   field int size; // length of this square, in pixels
+   field int dirX, dirY;
+
+   /** Constructs a new square with a given location and size. */
+   constructor Ball new(int Ax, int Ay, int Asize) {
+      let x = Ax;
+      let y = Ay;
+      let size = Asize;
+      let dirX = -1;
+      let dirY = -1;
+      do draw();
+      return this;
+   }
+
+   /** Disposes this square. */
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   /** Draws the square on the screen. */
+   method void draw() {
+      if((x > 0) & (x < 250)) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x-1, y-1, ((x+size) + 1), ((y + size) + 1));
+      }
+      do Screen.setColor(true);
+      do Screen.drawRectangle(x, y, x + size, y + size);
+      return;
+   }
+
+   /** Erases the square from the screen. */
+   method void erase() {
+      do Screen.setColor(false);
+      do Screen.drawRectangle(x, y, x + size, y + size);
+      return;
+   }
+
+    /** Increments the square size by 2 pixels. */
+   method void incSize() {
+      if (((y + size) < 254) & ((x + size) < 507)) {
+         do erase();
+         let size = size + 2;
+         do draw();
+      }
+      return;
+   }
+
+   /** Decrements the square size by 2 pixels. */
+   method void decSize() {
+      if (size > 2) {
+         do erase();
+         let size = size - 2;
+         do draw();
+      }
+      return;
+   }
+
+   /** Moves the square in accordance to its current directions. */
+   method void move() {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, y, x + size, y + size);
+         let y = y + dirY;
+         let x = x + dirX;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, y, x + size, y + size);
+      return;
+   }
+
+   method void updateDir(int p1, int p2) {
+       if( ((x = 1) & (y > p1)) & (y < (p1 + 20)))  {
+            let dirX = -dirX;
+       }
+       if( ((x = 500) & (y > p2)) & (y < (p2 + 20)) ) {
+            let dirX = -dirX;
+       }
+       if( ((x > 1) & (x < 496) & ((y = 0) | (y = 250)) )) {
+           let dirY = -dirY;
+       }
+       return;
+   }
+
+   method int getX() {
+      return x;
+   }
+
+   /** Moves the square right by 2 pixels. */
+   method void moveRight() {
+      if ((x + size) < 510) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, y, x + 1, y + size);
+         let x = x + 2;
+         do Screen.setColor(true);
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, y, x + size, y + size);
+         do Screen.drawRectangle((x + size) - 1, y, x + size, y + size);
+      }
+      return;
+   }
+}

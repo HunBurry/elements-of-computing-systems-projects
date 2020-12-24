@@ -1,0 +1,46 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/02/FullAdder.hdl
+
+/**
+ * Computes the sum of three bits.
+ */
+
+CHIP FullAdder {
+    IN a, b, c;  // 1-bit inputs
+    OUT sum,     // Right bit of a + b + c
+        carry;   // Left bit of a + b + c
+
+    PARTS:
+    And(a=a, b=b, out=carryor1a);
+    And(a=b, b=c, out=carrybothor);
+    And(a=c, b=a, out=carryor2b);
+    Or(a=carryor1a, b=carrybothor, out=carryfullora);
+    Or(a=carrybothor, b=carryor2b, out=carryfullorb);
+    Or(a=carryfullora, b=carryfullorb, out=carrydigital);
+
+    Xor(a=a, b=b, out=xor1out);
+    Xor(a=b, b=c, out=xor2out);
+    Xor(a=a, b=c, out=xor3out);
+
+    Or(a=xor1out, b=xor2out, out=sumor1out);
+    Or(a=xor2out, b=xor3out, out=sumor2out);
+    Or(a=sumor1out, b=sumor2out, out=lowsumtestor);
+    Not(in=carrydigital, out=lowsumtestnot);
+    And(a=lowsumtestnot, b=lowsumtestor, out=lowsumtest);
+
+    Nand(a=xor1out, b=xor2out, out=nand1out);
+    Nand(a=xor2out, b=xor3out, out=nand2out);
+    Nand(a=xor1out, b=xor3out, out=nand3out);
+    And(a=nand1out, b=nand2out, out=and1out);
+    And(a=nand2out, b=nand3out, out=and2out);
+    And(a=and1out, b=and2out, out=highsumtestand);
+    And(a=carrydigital, b=highsumtestand, out=highsumtest);
+
+    Or(a=lowsumtest, b=highsumtest, out=sum);
+    Not(in=carrydigital, out=carrydigital2);
+    Not(in=carrydigital2, out=carry);
+
+
+}

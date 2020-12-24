@@ -1,0 +1,77 @@
+///256 x 256
+
+class Paddle {
+	field int x, top; // screen location of the square's top-left corner
+    field int dir;
+
+   /** Constructs a new square with a given location and size. */
+   constructor Paddle new(int Ax, int Ay) {
+      let x = Ax;
+      let top = Ay;
+      let dir = 1;
+      do draw();
+      return this;
+   }
+
+   method void draw() {
+      do Screen.setColor(true);
+      do Screen.drawRectangle(x, top, x + 1, top + 20);
+      return;
+   }
+
+    method void move() {
+       if (dir = 0) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, top, x + 1, top + 20);
+         let top = top - 1;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, top, x + 1, top + 20);
+         if (top = 0) {
+             let dir = 1;
+         }
+      }
+      if (dir = 1) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, top, x + 1, top + 20);
+         let top = top + 1;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, top, x + 1, top + 20);
+         if ((top + 20) = 255) {
+             let dir = 0;
+         }
+      }
+      return;
+   }
+
+      method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   method int getTop() {
+    return top;
+   }
+
+   method void moveUp() {
+       if (top > 1) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, top, x + 1, top + 20);
+         let top = top - 1;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, top, x + 1, top + 20);
+      }
+      return;
+   }
+   
+   method void moveDown() {
+      if ((top + 20) < 255) {
+         do Screen.setColor(false);
+         do Screen.drawRectangle(x, top, x + 1, top + 20);
+         let top = top + 1;
+         do Screen.setColor(true);
+         do Screen.drawRectangle(x, top, x + 1, top + 20);
+      }
+      return;
+   }
+}
+

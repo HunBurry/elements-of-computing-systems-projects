@@ -1,0 +1,75 @@
+class PongGame {
+   field Paddle leftPaddle;
+   field Paddle rightPaddle; 
+   field Ball myBall;
+   field int direction; 
+
+   /** Constructs a new Square Game. */
+   constructor PongGame new() {
+      let leftPaddle = Paddle.new(0, 0);
+      let rightPaddle = Paddle.new(500,0);
+      let myBall = Ball.new(250, 128, 4);
+      let direction = 0; 
+      return this;
+   }
+
+   /** Disposes this game. */
+   method void dispose() {
+      do myaBll.dispose();
+      do rightPaddle.dispose();
+      do leftPaddle.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   method Ball getBall() {
+       return myBall;
+   }
+
+    method void movePaddle() {
+        var int p1, p2;
+        if (direction = 1) { 
+            do leftPaddle.moveUp();
+        }
+      if (direction = 2) { 
+            do leftPaddle.moveDown(); 
+        }
+        do rightPaddle.move();
+        let p1 = leftPaddle.getTop();
+        let p2 = rightPaddle.getTop();
+        do myBall.updateDir(p1, p2);
+        //do myBall.move();
+        do Sys.wait(5);  
+        return;
+    }
+
+   /** Runs the game: handles the user's inputs and moves the square accordingly */
+    method void run() {
+
+        var int p1, p2;
+        var char key;  // the key currently pressed by the user
+        var boolean exit;
+        let exit = false;
+        while (~exit) {
+            // waits for a key to be pressed
+            while (key = 0) {
+            let key = Keyboard.keyPressed();
+            let p1 = leftPaddle.getTop();
+            let p2 = rightPaddle.getTop();
+            do myBall.updateDir(p1, p2);
+            do myBall.move();
+            do Sys.wait(100);
+        }
+         if (key = 81)  { let exit = true; }     // q key
+         if (key = 131) { let direction = 1; }   // up arrow
+         if (key = 133) { let direction = 2; }   // down arrow
+
+         // waits for the key to be released
+         while (~(key = 0)) {
+            let key = Keyboard.keyPressed();
+            do movePaddle();
+         }
+     } 
+     return;
+   }
+}

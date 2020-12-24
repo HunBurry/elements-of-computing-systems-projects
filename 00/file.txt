@@ -1,0 +1,19 @@
+The only purpose of this file is to practice committing files
+to your group repository.
+
+Follow the Project 0 steps, add your name  to this file below, 
+and then stage (add)/commit your changes. (Each group member 
+should add their own name.)
+
+Make sure you 'git pull' the current directory before 
+opening and editing this file, so that you get the most
+current version in case another of your group members has
+already made changes.
+
+
+Group members:
+ -Patrick Groh
+ -Joey Pratt
+ -Hunter Berry
+ -
+
